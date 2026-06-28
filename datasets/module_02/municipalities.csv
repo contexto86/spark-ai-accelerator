@@ -1,0 +1,32 @@
+municipality_id,municipality_name,canton,population
+1,Zurich,ZH,421878
+2,Winterthur,ZH,116122
+3,Uster,ZH,36012
+4,Meilen,ZH,14733
+5,Bern,BE,134591
+6,Biel/Bienne,BE,55206
+7,Thun,BE,43850
+8,Interlaken,BE,5621
+9,Basel,BS,173552
+10,Riehen,BS,21339
+11,Geneva,GE,203951
+12,Vernier,GE,34898
+13,Lancy,GE,33879
+14,Lausanne,VD,140202
+15,Yverdon-les-Bains,VD,30156
+16,Montreux,VD,26574
+17,Lucerne,LU,82422
+18,Emmen,LU,31087
+19,Kriens,LU,28216
+20,Lugano,TI,62315
+21,Bellinzona,TI,43640
+22,Locarno,TI,15824
+23,St. Gallen,SG,75833
+24,Rapperswil-Jona,SG,27577
+25,Wil,SG,24159
+26,Chur,GR,36783
+27,Davos,GR,10832
+28,St. Moritz,GR,4882
+29,Neuchatel,NE,44597
+30,La Chaux-de-Fonds,NE,36748
+

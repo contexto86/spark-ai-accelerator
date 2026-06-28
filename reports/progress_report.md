@@ -75,3 +75,120 @@ Short mock interview: average 8/10 — Practitioner.
 
 Module status: complete. Recommended next module: Spark SQL / DataFrame
 execution basics, while carrying forward architecture diagnostics.
+
+---
+
+# Module 02 — Spark SQL Fundamentals
+
+Completion Date: June 28, 2026
+
+Time Invested: Not recorded
+
+## Topics Covered
+
+- Reading CSV datasets into Spark DataFrames.
+- Explicit schemas versus default string columns and schema inference.
+- Temporary views and session-scoped SQL access.
+- Spark SQL actions, lazy plans, `show()`, `count()`, and `printSchema()`.
+- Aggregations using partial and final `HashAggregate` stages.
+- `Exchange` as data movement for grouping, joining, and global ordering.
+- Broadcast hash joins versus shuffle/sort-merge joins.
+- Join cardinality validation and duplicate-key diagnostics.
+- Window functions using `ROW_NUMBER`.
+- Logical window `PARTITION BY` versus Spark physical partitions.
+- Top-N-per-group plans with `WindowGroupLimit` partial and final stages.
+- `EXPLAIN FORMATTED` interpretation for scans, filters, joins, aggregates,
+  exchanges, sorts, windows, and adaptive plans.
+- Spark SQL versus PostgreSQL execution differences.
+- Diagnosing bad query shapes before tuning Spark configuration.
+
+## Strengths
+
+- Correctly explains Spark SQL as SQL intent translated into distributed
+  scans, tasks, exchanges, joins, aggregations, sorts, and driver results.
+- Understands that temporary views do not copy data into durable tables.
+- Explains why `GROUP BY` and window partitioning may require data movement.
+- Correctly distinguishes broadcast join and sort-merge join as physical join
+  strategies rather than SQL join types.
+- Reads physical plans and identifies `BroadcastExchange`,
+  `BroadcastHashJoin`, `HashAggregate`, `Window`, `WindowGroupLimit`,
+  `Sort`, `Exchange`, and `AdaptiveSparkPlan`.
+- Understands why PostgreSQL and Spark can run identical SQL with very
+  different execution concerns.
+- Diagnoses join row multiplication through expected counts and duplicate-key
+  checks.
+
+## Weaknesses
+
+- Needs occasional care with SQL syntax under fatigue, especially window
+  `PARTITION BY` keys and complete query clauses.
+- Initially conflated logical window partitioning with Spark physical
+  partitions; this improved after guided examples.
+- Initially described PostgreSQL grouping as repeated scans per group; later
+  corrected toward storage, indexes, statistics, and local execution plans.
+- Should keep using explicit schemas for numeric CSV fields to avoid implicit
+  casts during aggregates.
+
+## Recommended Reinforcement
+
+- Re-run the window exercises and explain why `PARTITION BY canton`, not
+  `municipality_id`, answers top-N-per-canton questions.
+- Practice writing complete checkpoint SQL without notes before the final mock
+  interview.
+- Continue reading `EXPLAIN FORMATTED` from top-level shape down to expensive
+  operators: scans, projects, exchanges, joins, aggregates, sorts, and windows.
+- Keep separating row-width reduction through projection from row-count
+  reduction through filters or limits.
+
+## Readiness Score
+
+Checkpoint-style closeout: 7.5/10 — Practitioner with minor syntax gaps.
+
+Final mock interview: deferred by learner preference.
+
+Module status: conceptually complete. Recommended next step: optional short
+Module 02 interview, then proceed to the next module while revisiting explicit
+schemas and window syntax briefly.
+
+---
+
+# Module 03 Planned Learning Track: PySpark DataFrames and the SQL ↔ DataFrame Mental Model
+
+Module status: generated and ready to start. Completion is not yet assessed.
+
+## Topics Added
+
+- PySpark DataFrames as a composable API for building Spark logical plans.
+- SQL ↔ DataFrame translation practice.
+- Transformations versus actions in DataFrame code.
+- DataFrame immutability and meaningful intermediate names.
+- Column expressions, projection, filtering, and calculated columns.
+- Aggregations, joins, and window functions using the DataFrame API.
+- Conceptual UDF coverage and why built-in functions are preferred.
+- Reading `EXPLAIN FORMATTED` from DataFrame pipelines.
+- Common PySpark anti-patterns: unnecessary `collect()`, unnecessary UDFs,
+  wide rows, repeated actions, weak join validation, and SQL-string overuse.
+- Mini-project checkpoint requiring both Spark SQL and PySpark DataFrame
+  solutions.
+
+## Assets Added
+
+- `datasets/module_03/transactions.csv`
+- `datasets/module_03/population_history.csv`
+- `knowledge/module_03/`
+- `curriculum/module_03/`
+- `exercises/module_03/`
+- `notebooks/module_03/`
+- `checkpoints/module_03/`
+- `prompts/module_03/`
+- `career_artifacts/module_03/`
+
+## Current Assessment
+
+- Hours invested by learner: not yet recorded for Module 03.
+- Checkpoint score: not yet attempted.
+- Interview score: not yet attempted.
+- Module status: ready to begin.
+
+Recommended start: Trainer Mode diagnostic discussion before syntax, beginning
+with why DataFrames exist if Spark already supports SQL.

@@ -111,7 +111,7 @@ checkpoint or interview response.
 - Demonstrate recall without notes.
 
 **Materials:** `lesson_06.md`; knowledge chapter 08; checkpoint and interviewer
-prompt.
+prompt. After completion, use knowledge chapter 09 as the review pack.
 
 **Completion Criteria:**
 
@@ -125,4 +125,3 @@ prompt.
 The module is complete only when the learner can explain Spark purpose, driver,
 executor, partition, DAG, and lazy evaluation without notes, and can defend
 when Spark should and should not be used.
-
