@@ -152,9 +152,9 @@ schemas and window syntax briefly.
 
 ---
 
-# Module 03 Planned Learning Track: PySpark DataFrames and the SQL ↔ DataFrame Mental Model
+# Module 03 — PySpark DataFrames and the SQL ↔ DataFrame Mental Model
 
-Module status: generated and ready to start. Completion is not yet assessed.
+Module status: in progress. Estimated coverage: 25-30%.
 
 ## Topics Added
 
@@ -188,7 +188,68 @@ Module status: generated and ready to start. Completion is not yet assessed.
 - Hours invested by learner: not yet recorded for Module 03.
 - Checkpoint score: not yet attempted.
 - Interview score: not yet attempted.
-- Module status: ready to begin.
+- Module status: in progress.
 
-Recommended start: Trainer Mode diagnostic discussion before syntax, beginning
-with why DataFrames exist if Spark already supports SQL.
+## Topics Covered So Far
+
+- Why DataFrames exist if Spark already supports SQL.
+- SQL and DataFrames as two API layers over the same Spark planning and
+  execution engine.
+- When SQL is clearer versus when DataFrames are clearer.
+- Transformations versus actions.
+- DataFrame immutability.
+- Column expressions as deferred Spark expressions, not immediate Python
+  values.
+- Built-in Spark functions versus Python UDFs at a conceptual level.
+- `select()` as projection / row-width reduction.
+- `filter()` as SQL `WHERE` / row-count reduction.
+- Column pruning observed in `EXPLAIN FORMATTED`.
+- Pushed filters observed in `EXPLAIN FORMATTED`.
+- `withColumn()` for derived columns using `F.year`, `F.round`, and `F.when`.
+- Catalyst as Spark SQL's optimizer for SQL and DataFrame plans.
+- Aggregation with `groupBy().agg()`.
+- Partial aggregate, `Exchange hashpartitioning(...)`, and final aggregate in
+  a DataFrame physical plan.
+- Catalyst pruning unused derived columns from an upstream logical plan.
+- Troubleshooting a Py4J `ConnectionRefusedError` caused by a dead Spark JVM /
+  stale notebook kernel, not bad aggregation syntax.
+
+## Current Resume Point
+
+Continue in Trainer Mode at Module 03 joins:
+
+- Notebook: `notebooks/module_03/04_joins_windows.ipynb`
+- Lesson: `curriculum/module_03/lesson_06_joins.md`
+- Exercise: `exercises/module_03/exercise_06_joins.md`
+
+Start with this pipeline:
+
+```python
+profile = (
+    transactions
+    .join(
+        municipalities.select("municipality_id", "municipality_name", "canton"),
+        "municipality_id",
+        "inner",
+    )
+    .join(property_values, "municipality_id", "left")
+    .select(
+        "transaction_id",
+        "municipality_id",
+        "municipality_name",
+        "canton",
+        "sale_price",
+        "sale_date",
+        "property_type",
+        "property_value_index",
+    )
+)
+```
+
+Ask the learner to reason before running code:
+
+1. What does this return logically?
+2. What join cardinality is expected if `municipalities` and
+   `property_values` each have one row per `municipality_id`?
+3. What physical join strategies might Spark choose?
+4. Why is the final `.select(...)` useful?

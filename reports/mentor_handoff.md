@@ -86,13 +86,15 @@ schemas, window syntax, and plan interpretation.
 
 # Module 03 Mentor Handoff: PySpark DataFrames and the SQL ↔ DataFrame Mental Model
 
-Module Completed: No - Module 03 materials generated and ready to start.
+Module Completed: No - Module 03 is in progress.
 
-Hours Invested: 0 learner hours recorded for Module 03.
+Hours Invested: Not recorded.
 
 Checkpoint Result: Not attempted. Current score: not scored.
 
 Interview Result: Not attempted. Current score: not scored.
+
+Current Coverage: Approximately 25-30%.
 
 ## Generated Scope
 
@@ -124,16 +126,78 @@ Interview Result: Not attempted. Current score: not scored.
   treated as syntax memorization.
 - Code review quality should focus on Spark idioms, not formatting.
 
+## Module 03 Topics Already Covered
+
+- DataFrames exist to build Spark logical plans programmatically, especially
+  when transformations need composition, reuse, testing, parameters, branching,
+  or integration with Python code.
+- SQL and DataFrame APIs are different front doors into similar Catalyst
+  logical plans when they express equivalent semantics.
+- SQL is often clearer for compact, declarative, one-off analytics.
+- DataFrames are often clearer for complex, reusable, testable business logic
+  in a Python codebase.
+- Transformations are lazy and build plans; actions such as `show()`,
+  `count()`, and writes trigger execution.
+- DataFrames are immutable; transformations return new DataFrames rather than
+  mutating the existing one.
+- Column expressions describe work Spark evaluates later on executors; they are
+  not immediate Python values.
+- Built-in functions are preferred over Python UDFs when possible because
+  Catalyst can inspect and optimize them, while Python UDFs are often black
+  boxes with serialization overhead.
+- `select()` maps to projection and reduces row width.
+- `filter()` maps to SQL `WHERE` and reduces row count.
+- Learner observed column pruning in a scan where no separate physical
+  `Project` appeared because Spark read only needed CSV columns.
+- Learner observed pushed filters and a `Project` node for `sale_date` casting.
+- Learner used `withColumn()` with `F.year`, `F.round`, and `F.when` and read
+  the resulting `Project` expressions in the plan.
+- Learner understood Catalyst as the Spark SQL optimizer for both SQL and
+  DataFrame plans.
+- Learner predicted and observed partial/final `HashAggregate` and
+  `Exchange hashpartitioning(municipality_id, property_type, 4)` for
+  `groupBy().agg()`.
+- Learner debugged a Py4J `ConnectionRefusedError` as a dead Spark JVM /
+  stale notebook session, not a DataFrame aggregation error.
+
+## Module 03 Strengths So Far
+
+- Strong conceptual grasp that DataFrames and SQL both build Spark plans.
+- Good distinction between projection reducing row width and filtering
+  reducing row count.
+- Reads `EXPLAIN FORMATTED` evidence concretely: scan schema, pushed filters,
+  project expressions, partial/final aggregates, and exchange keys.
+- Correctly reasons about lazy evaluation and immutability.
+- Understands why built-ins are preferable to UDFs for simple expressions.
+
+## Module 03 Gaps To Reinforce
+
+- Continue sharpening exact vocabulary: `select()` is projection, not a read.
+- Continue distinguishing logical-plan existence from physical materialization:
+  derived columns exist in the plan even if not materialized yet.
+- DataFrame joins, windows, translation workbook, code review, and mini-project
+  are not yet covered.
+
 Spark SQL Confidence: Practitioner.
 
-PySpark Confidence: Ready to train; basic environment familiarity from Module 02.
+PySpark Confidence: Early practitioner foundations; DataFrame joins and windows
+still need training.
 
-SQL ↔ DataFrame Translation Ability: Not yet assessed.
+SQL ↔ DataFrame Translation Ability: Basic mental model established; practical
+translation workbook not yet assessed.
 
 Code Review Quality: Not yet assessed for PySpark.
 
-Recommended Reinforcement: Start with diagnostic reasoning before syntax. Ask
-why DataFrames exist, how DataFrames relate to SQL internally, when SQL is
-clearer, and when DataFrames are clearer.
+Recommended Reinforcement: Resume at DataFrame joins. Ask the learner to
+predict logical result, cardinality, join strategy, and the role of final
+projection before running code.
+
+Exact Resume Point:
+
+- Notebook: `notebooks/module_03/04_joins_windows.ipynb`
+- Lesson: `curriculum/module_03/lesson_06_joins.md`
+- Exercise: `exercises/module_03/exercise_06_joins.md`
+- First prompt: explain the `profile` DataFrame pipeline joining transactions
+  to projected municipalities and left joining property values.
 
 Readiness for Module 04: Not applicable until Module 03 checkpoint is complete.
